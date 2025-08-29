@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Aayushi!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c1e, #1a1a3a);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(20, 20, 40, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .birthday-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff4d7e, #ff8a5c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        .photo-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .photo-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder:nth-child(2) {
+            background: linear-gradient(45deg, #ff4d7e, #ff8a5c);
+            animation-delay: 1s;
+        }
+
+        .photo-placeholder:nth-child(3) {
+            background: linear-gradient(45deg, #00cdac, #02aab0);
+            animation-delay: 2s;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff4d7e, #ff8a5c);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 77, 126, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 77, 126, 0.6);
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 1s ease;
+        }
+
+        .question {
+            font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #5cff8a;
+    font-style: italic;
+    font-family: cursive;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background: rgba(255, 138, 92, 0.2);
+            border: 2px solid #ff8a5c;
+            transform: scale(1.05);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            min-height: 60px;
+            color: #ff8a5c;
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #ff4d7e;
+            opacity: 0;
+            animation: fall 10s linear infinite;
+        }
+
+        .flowers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #ff8a5c;
+            opacity: 0;
+            animation: fall 8s linear infinite;
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            flex-direction: column;
+        }
+
+        .celebration-content {
+            background: linear-gradient(135deg, #1a1a3a, #0c0c1e);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: zoomIn 0.5s ease;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff4d7e;
+            animation: confettiFall 5s linear infinite;
+        }
+
+        .shayari-container {
+            display: none;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            animation: fadeIn 1s ease;
+        }
+
+        .shayari {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: #ff8a5c;
+            text-shadow: 0 0 10px rgba(255, 138, 92, 0.5);
+        }
+
+        .memory-photo {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            border-radius: 15px;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease;
+        }
+
+        .memory-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .photo-placeholder {
+                width: 120px;
+                height: 120px;
+                font-size: 2.5rem;
+            }
+            
+            .question {
+                font-size: 1.3rem;
+            }
+            
+            .option {
+                min-width: 150px;
+            }
+
+            .shayari {
+                font-size: 1.2rem;
+            }
+
+            .memory-photo {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .photo-placeholder {
+                width: 100px;
+                height: 100px;
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                min-width: 100%;
+            }
+
+            .shayari {
+                font-size: 1rem;
+            }
+
+            .memory-photo {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="birthday-header" id="welcome-screen">
+            <h1>Happy Birthday Dear Aayushi!</h1>
+            <div class="photo-gallery">
+                <div class="photo-placeholder">
+                    <img src="g.jpg" alt="Ram">
+                </div>
+                <div class="photo-placeholder">
+                    <img src="b.jpg" alt="Birthday">
+                </div>
+                <div class="photo-placeholder">
+                    <img src="c.jpg" alt="Gift">
+                </div>
+            </div>
+            <p>Today is a special day just for you! 🎉🎂</p>
+            <button class="btn" id="start-btn">Click Here Something Special For You</button>
+        </div>
+
+        <div class="question-container" id="question-container">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <div class="shayari-container" id="shayari-container">
+            <div class="shayari" id="shayari"></div>
+        </div>
+
+        <div class="memory-photo" id="memory-photo">
+            <img id="memory-img" src="f.png" alt="Memory">
+        </div>
+
+        <div class="hearts" id="hearts"></div>
+        <div class="flowers" id="flowers"></div>
+    </div>
+
+    <div class="celebration" id="celebration">
+        <div class="celebration-content">
+            <h2>Congratulations Aayushi! 🎉</h2>
+            <p>You've successfully answered all the questions!</p>
+            <p>You truly are special and remember all the important moments!</p>
+            <button class="btn" id="restart-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const questionContainer = document.getElementById('question-container');
+            const shayariContainer = document.getElementById('shayari-container');
+            const memoryPhoto = document.getElementById('memory-photo');
+            const memoryImg = document.getElementById('memory-img');
+            const startBtn = document.getElementById('start-btn');
+            const questionEl = document.getElementById('question');
+            const optionsEl = document.getElementById('options');
+            const feedbackEl = document.getElementById('feedback');
+            const shayariEl = document.getElementById('shayari');
+            const celebration = document.getElementById('celebration');
+            const restartBtn = document.getElementById('restart-btn');
+            const heartsContainer = document.getElementById('hearts');
+            const flowersContainer = document.getElementById('flowers');
+            
+            let currentQuestion = 0;
+            let showShayariAfterAnswer = false;
+            
+            // Create floating hearts
+            for (let i = 0; i < 20; i++) {
+                createHeart();
+                createFlower();
+            }
+            
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heartsContainer.appendChild(heart);
+            }
+            
+            function createFlower() {
+                const flower = document.createElement('div');
+                flower.innerHTML = '🌸';
+                flower.classList.add('flower');
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                flower.style.animationDelay = Math.random() * 5 + 's';
+                flowersContainer.appendChild(flower);
+            }
+            
+            // Shayari data
+            const shayaris = [
+                "तेरे हुस्न को परदे की ज़रुरत ही क्या है, \nकौन होश में रहता है तुझे देखने के बाद… !!",
+                
+                "मुझसे जब भी मिलो तो नज़रें उठा के मिला करो ,\nमुझे पसंद है अपने आप को तेरी आँखों में देखना…...!!!",
+                
+                "कोई अजनबी ख़ास हो रहा है, \nलगता है फिर प्यार हो रहा है.........!!!"
+            
+            ];
+            
+            // Memory photos
+            const memoryPhotos = [
+                "a.jpg",
+                "b.jpg",
+                "c.jpg",
+                "d.jpg",
+                "e.jpg"
+            ];
+            
+            // Questions data
+            const questions = [
+                {
+                    question: "Hey Aayushi! Welcome to this Amazing page!\n It was created by Ram sir only for you because you are special!\n Let me know when you first met Ram sir?",
+                    options: ["12/08/2025", "15/06/2020"],
+                    correct: 0
+                },
+                {
+                    question: "What is Ram sir's favorite color?",
+                    options: ["Blue Dark", "Black", "Maroon", "Green"],
+                    correct: 2
+                },
+                {
+                    question: "What is Ram sir's favorite food?",
+                    options: ["Pizza", "Biryani", "Momos"],
+                    correct: 2
+                },
+               
+                {
+                    question: "What is Ram sir's favorite hobby?",
+                    options: ["Reading Books", "Aapse baat kerna", "Traveling", "Photography"],
+                    correct: 2
+                },
+                {
+                    question: "Which place does Ram sir want to visit the most with You ?",
+                    options: ["Vijay nagar", "Magdoot", "Kashmir", "Kach"],
+                    correct: 2
+                },
+                {
+                    question: "What is Ram sir's favorite season?",
+                    options: ["Spring", "Summer", "Monsoon", "Winter"],
+                    correct: 2
+                },
+                {
+                    question: "Which is Ram sir's favorite animal?",
+                    options: ["Dog", "Cat", "Elephant", "Lion"],
+                    correct: 0
+                },
+                {
+                    question: "What is Ram sir's favorite music genre?",
+                    options: ["Old", "New", "Classical", "Jazz"],
+                    correct: 0
+                },
+                {
+                    question: "Which is Ram sir's favorite book?",
+                    options: ["The Alchemist", "Think Like a Monk", "The God of Small Things", "Power of subconsious mind"],
+                    correct: 3
+                },
+               
+                {
+                    question: "Which is Ram sir's favorite gadget?",
+                    options: ["Smartphone", "Laptop", "Smartwatch", "Camera"],
+                    correct: 2
+                },
+                {
+                    question: "What is Ram sir's favorite drink?",
+                    options: ["Coffee", "Tea", "Juice", "Milkshake"],
+                    correct: 1
+                },
+                {
+                    question: "Which is Ram sir's favorite festival?",
+                    options: ["Diwali", "Holi", "Sawan", "Sham"],
+                    correct: 3
+                },
+                {
+                    question: "What is Ram sir's favorite time of day with you?",
+                    options: ["Morning", "Afternoon", "Evening", "Night"],
+                    correct: 2
+                }
+            ];
+            
+            // Start the quiz
+            startBtn.addEventListener('click', function() {
+                welcomeScreen.style.display = 'none';
+                questionContainer.style.display = 'block';
+                showQuestion();
+            });
+            
+            // Restart the quiz
+            restartBtn.addEventListener('click', function() {
+                celebration.style.display = 'none';
+                currentQuestion = 0;
+                welcomeScreen.style.display = 'block';
+                shayariContainer.style.display = 'none';
+                memoryPhoto.style.display = 'none';
+            });
+            
+            // Show current question
+            function showQuestion() {
+                const question = questions[currentQuestion];
+                questionEl.textContent = question.question;
+                
+                optionsEl.innerHTML = '';
+                feedbackEl.textContent = '';
+                shayariContainer.style.display = 'none';
+                memoryPhoto.style.display = 'none';
+                
+                question.options.forEach((option, index) => {
+                    const optionBtn = document.createElement('div');
+                    optionBtn.classList.add('option');
+                    optionBtn.innerHTML = `${option} ${getRandomEmoji()}`;
+                    optionBtn.addEventListener('click', () => checkAnswer(index));
+                    optionsEl.appendChild(optionBtn);
+                });
+            }
+            
+            // Check if answer is correct
+            function checkAnswer(selectedIndex) {
+                const question = questions[currentQuestion];
+                
+                if (selectedIndex === question.correct) {
+                    feedbackEl.textContent = getRandomSuccessMessage();
+                    feedbackEl.style.color = '#00ff8c';
+                    
+                    // Randomly decide whether to show shayari or memory photo after correct answer
+                    showShayariAfterAnswer = Math.random() > 0.5;
+                    
+                    setTimeout(() => {
+                        if (showShayariAfterAnswer && currentQuestion % 2 === 0) {
+                            showShayari();
+                        } else if (currentQuestion % 3 === 0) {
+                            showMemoryPhoto();
+                        } else {
+                            moveToNextQuestion();
+                        }
+                    }, 3000);
+                } else {
+                    feedbackEl.textContent = "Aayushi Maam, this is not fair! Ye galat baat hai, aap right answer choose karo!";
+                    feedbackEl.style.color = '#ff4d7e';
+                }
+            }
+            
+            // Show shayari
+            function showShayari() {
+                questionContainer.style.display = 'none';
+                shayariContainer.style.display = 'block';
+                memoryPhoto.style.display = 'none';
+                
+                const randomShayari = shayaris[Math.floor(Math.random() * shayaris.length)];
+                shayariEl.textContent = randomShayari;
+                
+                setTimeout(() => {
+                    moveToNextQuestion();
+                }, 6000);
+            }
+            
+            // Show memory photo
+            function showMemoryPhoto() {
+                questionContainer.style.display = 'none';
+                shayariContainer.style.display = 'none';
+                memoryPhoto.style.display = 'block';
+                
+                const randomPhoto = memoryPhotos[Math.floor(Math.random() * memoryPhotos.length)];
+                memoryImg.src = randomPhoto;
+                
+                setTimeout(() => {
+                    moveToNextQuestion();
+                }, 6000);
+            }
+            
+            // Move to next question or show celebration
+            function moveToNextQuestion() {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    questionContainer.style.display = 'block';
+                    shayariContainer.style.display = 'none';
+                    memoryPhoto.style.display = 'none';
+                    showQuestion();
+                } else {
+                    showCelebration();
+                }
+            }
+            
+            // Show celebration screen
+            function showCelebration() {
+                questionContainer.style.display = 'none';
+                shayariContainer.style.display = 'none';
+                memoryPhoto.style.display = 'none';
+                celebration.style.display = 'flex';
+                
+                // Create confetti
+                for (let i = 0; i < 100; i++) {
+                    createConfetti();
+                }
+            }
+            
+            // Create confetti effect
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                celebration.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 6000);
+            }
+            
+            // Helper functions
+            function getRandomEmoji() {
+                const emojis = ['🎉', '🎂', '🎁', '🎈', '✨', '🥳', '🎊'];
+                return emojis[Math.floor(Math.random() * emojis.length)];
+            }
+            
+            function getRandomSuccessMessage() {
+                const messages = [
+                    "Wow! You Aapko Yaad hai ! Nice! 😊",
+                    "Absolutely correct! 🎉",
+                    "You're amazing! That's right! 👍",
+                    "Perfect! You know Ram sir so well! 🎂",
+                    "Excellent memory! That's correct! 🎁"
+                ];
+                return messages[Math.floor(Math.random() * messages.length)];
+            }
+            
+            function getRandomColor() {
+                const colors = ['#ff4d7e', '#ff8a5c', '#00cdac', '#6a11cb', '#2575fc'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+        });
+    </script>
+</body>
+</html>
